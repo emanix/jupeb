@@ -81,7 +81,7 @@ class Admin extends MY_Controller{
 	function edit_session($id){
 		$this->load->model('M_Admin');
 		$sid = $this->M_Admin->get_session_by_id($id);
-		
+		//creates the session name field and populates it with the session to be edited
 		$update_field = "";
 		if(count($sid) > 0){
 			foreach ($sid as $key => $value) {
@@ -91,7 +91,7 @@ class Admin extends MY_Controller{
 				$this->session->set_userdata(array('sessionname' => $value->session_name));
 			}	
 		}
-		
+		//Loads the edit session page
 		$data['student_records'] = 'Students Management';
 		$data['update_session'] = 'Update Session';
         $data['page_title'] = 'Manage Session';
@@ -106,7 +106,7 @@ class Admin extends MY_Controller{
 		if($this->input->post()){
 			$this->load->model('M_Admin');
 			$this->M_Admin->session_update();
-
+			//Updates the semesters of the updated session
 			for ($counter = 1; $counter<=2; $counter++){
 				$olddata = $this->session->userdata('sessionname').'.'.$counter;
         		$data = $this->input->post($this->session->userdata('sessionname')).'.'.$counter;
