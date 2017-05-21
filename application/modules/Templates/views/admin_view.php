@@ -165,6 +165,18 @@ desired effect
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url(); ?>Programs/add_programs">Add Programs</a></li>
             <li><a href="<?php echo base_url(); ?>Subjects/add_subjects">Add Subjects</a></li>
+            <li><a href="<?php echo base_url(); ?>Subjects_Combination/combine_subjects">Manage Subject Combination</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="ion ion-person"></i> <span>Manage Students</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url(); ?>Students/add_students">Add Students</a></li>
+            <li><a href="<?php echo base_url(); ?>Students/view_students">View & Edit Students Details</a></li>
           </ul>
         </li>
       </ul>
@@ -204,7 +216,7 @@ desired effect
       ...The Future is Babcock
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2017 <a href="www.babcock.edu.ng">Babcock University</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2017 <a href="https://www.babcock.edu.ng">Babcock University</a>.</strong> All rights reserved.
   </footer>
 
   

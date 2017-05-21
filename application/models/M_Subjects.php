@@ -17,9 +17,21 @@ class M_Subjects extends CI_Model
         return $query->result();
     }
 
+    function get_subject_pid($pid){
+        $query = $this->db->query('select * from subject_combtb where pid = "'.$pid.'"');
+        
+        return $query->result();
+    }
+
     function add_subjects($name){
     	$query = array ('subject_name' => $name);
     	$this->db->insert('subjecttb', $query);
+
+    }
+
+    function add_subject_combination($pid, $subid){
+        $query = array ('pid' => $pid, 'sid' => $subid);
+        $this->db->insert('subject_combtb', $query);
 
     }
 
@@ -31,5 +43,11 @@ class M_Subjects extends CI_Model
         
         return $this->db->update('subjecttb');
         
+    }
+
+    function delete_subject($pid, $subid){
+        $this->db->where('pid', $pid);
+        $this->db->where('sid', $subid);
+        $this->db->delete('subject_combtb');
     }
 }

@@ -28,10 +28,10 @@
             <form class="form-horizontal" method="POST" action="<?php echo base_url(); ?>Admin/add_session">
               <div class="box-body">
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Session Name</label>
+                  <label class="col-sm-3 control-label">Session Name</label>
 
-                  <div class="col-sm-10">
-                    <input  type="text" class="form-control" id="inputEmail3" name="session" placeholder="Add Session">
+                  <div class="col-sm-9">
+                    <input  type="text" class="form-control" name="session" placeholder="Add Session" style="width: 100%;">
                   </div>
                 </div>
                 
