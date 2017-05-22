@@ -30,33 +30,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/dist/css/skins/skin-blue.min.css">
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
 </head>
-<!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to get the
-desired effect
-|---------------------------------------------------------|
-| SKINS         | skin-blue                               |
-|               | skin-black                              |
-|               | skin-purple                             |
-|               | skin-yellow                             |
-|               | skin-red                                |
-|               | skin-green                              |
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | fixed                                   |
-|               | layout-boxed                            |
-|               | layout-top-nav                          |
-|               | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
+
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
@@ -139,7 +114,7 @@ desired effect
       </div>
 
       <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
+      <!--<form action="#" method="get" class="sidebar-form">
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search...">
               <span class="input-group-btn">
@@ -147,12 +122,12 @@ desired effect
                 </button>
               </span>
         </div>
-      </form>
+      </form>-->
       <!-- /.search form -->
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
-        <li class="header"><?php echo $student_records; ?></li>
+        <li class="header"><h4><?php echo $student_records; ?></h4></li>
         <!-- Optionally, you can add icons to the links -->
         <li class="active"><a href="<?php echo base_url(); ?>Admin"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li><a href="<?php echo base_url(); ?>Admin/manage_session"><i class="fa fa-laptop"></i> <span>Manage Session</span></a></li>
@@ -176,9 +151,10 @@ desired effect
           </a>
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url(); ?>Students/add_students">Add Students</a></li>
-            <li><a href="<?php echo base_url(); ?>Students/view_students">View & Edit Students Details</a></li>
+            <!--<li><a href="<?php //echo base_url(); ?>Students/view_students">View & Edit Students Details</a></li>-->
           </ul>
         </li>
+        <li><a href="<?php echo base_url(); ?>Grades/manage_grades"><i class="fa fa-laptop"></i> <span>Manage Studens' Grades</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -239,10 +215,6 @@ desired effect
 <!-- FastClick -->
 <script src="<?php echo base_url(); ?>assets/plugins/fastclick/fastclick.js"></script>
 
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. Slimscroll is required when using the
-     fixed layout. -->
 </body>
 </html>
 <?php } else {redirect(base_url().'Login');}
