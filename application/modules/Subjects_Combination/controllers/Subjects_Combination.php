@@ -4,7 +4,7 @@ class Subjects_Combination extends MY_Controller{
 
 	function __construct(){
 		parent::__construct();
-		$this->load->model(['M_Programs', 'M_Subjects']);
+		$this->load->model(['M_Programs', 'M_Subjects', 'M_Grades']);
 		$this->load->module('Templates');
 	}
 
@@ -70,6 +70,7 @@ class Subjects_Combination extends MY_Controller{
         if (count($subjects)){
             foreach ($subjects as $key => $value){
                 $options .= "<option value = '{$value->subid}'>{$value->subject_name}</option>";
+                //$this->session->set_userdata('s_id', $value->subid);
             }
         }
         return $options;
@@ -107,6 +108,8 @@ class Subjects_Combination extends MY_Controller{
     		$this->session->set_userdata(array('sub_id' => $this->input->post('sub_name')));
     	}
     	$this->add_subject_combination($progid);
+    	//$this->M_Grades->initiate_percent_with_zero($this->session->userdata('p_id'), $this->session->userdata('sub_id'));
+
     }
 
     function remove_subject($id){

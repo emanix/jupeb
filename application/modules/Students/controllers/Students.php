@@ -6,7 +6,7 @@ class Students extends MY_Controller{
     {
         parent::__construct();
         $this->load->module(['Templates']);
-        $this->load->model('M_Student');
+        $this->load->model(['M_Student', 'M_Subjects', 'M_Grades']);
         
     }
 
@@ -93,6 +93,17 @@ class Students extends MY_Controller{
 	    		$pid = $this->input->post('pid');
 
 	    		$this->M_Student->add_students($matric, $stdname, $sid, $pid);
+          //new items comes here
+          $subjects = $this->M_Subjects->get_subject_pid($pid);
+          $student = $this->M_Student->get_student_by_name($stdname);
+          $stdid = "";
+          foreach ($student as $key => $value) {
+            $stdid = $value->stdid;
+          }
+
+          foreach ($subjects as $key => $value) {
+            $this->M_Grades->insert_into_gradestb($stdid, $pid, $value->sid);
+          }
 	    	}
 	    }
 	    $this->session->set_flashdata('success', 'Students Record added successfully');
@@ -121,7 +132,7 @@ class Students extends MY_Controller{
    				$student_table .= "<th>Serial No</th>";
    				$student_table .= "<th>Student Name</th>";
    				$student_table .= "<th>Program</th>";
-   				$student_table .= "<th>Edit</th>";
+   				//$student_table .= "<th>Edit</th>";
    				$student_table .= "</tr>";
    				$student_table .= "</thead>";
    				$student_table .= "<tfoot>";
@@ -129,7 +140,7 @@ class Students extends MY_Controller{
    				$student_table .= "<th>Serial No</th>";
    				$student_table .= "<th>Student Name</th>";
    				$student_table .= "<th>Program</th>";
-   				$student_table .= "<th>Edit</th>";
+   				//$student_table .= "<th>Edit</th>";
    				$student_table .= "</tr>";
    				$student_table .= "</tfoot>";
    				$student_table .= "<tbody>";
@@ -171,7 +182,7 @@ class Students extends MY_Controller{
    				$student_table .= "<th>Serial No</th>";
    				$student_table .= "<th>Student Name</th>";
    				$student_table .= "<th>Program</th>";
-   				$student_table .= "<th>Edit</th>";
+   				//$student_table .= "<th>Edit</th>";
    				$student_table .= "</tr>";
    				$student_table .= "</thead>";
    				$student_table .= "<tfoot>";
@@ -179,7 +190,7 @@ class Students extends MY_Controller{
    				$student_table .= "<th>Serial No</th>";
    				$student_table .= "<th>Student Name</th>";
    				$student_table .= "<th>Program</th>";
-   				$student_table .= "<th>Edit</th>";
+   				//$student_table .= "<th>Edit</th>";
    				$student_table .= "</tr>";
    				$student_table .= "</tfoot>";
    				$student_table .= "<tbody>";

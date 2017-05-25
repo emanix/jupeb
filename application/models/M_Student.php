@@ -63,4 +63,8 @@ class M_Student extends CI_Model{
         
     }
 
+    function get_student_by_name($stdname){
+        $query = $this->db->query('select * from studenttb where student_name = "'.$stdname.'" ');
+        return $query->result();
+    }
 }

@@ -60,7 +60,7 @@
                 <tr>
                   <th>Serial No</th>
                   <th>Subject Name</th>
-                  <th>Edit</th>
+                  <!--<th>Edit</th>-->
                 </tr>
                 </thead>
                 
@@ -68,7 +68,7 @@
                 <tr>
                   <th>Serial No</th>
                   <th>Subject Name</th>
-                  <th>Edit</th>
+                  <!--<th>Edit</th>-->
                 </tr>
                 </tfoot>
                 <tbody>
