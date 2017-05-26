@@ -67,4 +67,24 @@ class M_Student extends CI_Model{
         $query = $this->db->query('select * from studenttb where student_name = "'.$stdname.'" ');
         return $query->result();
     }
+
+    function get_acc_students(){
+        $query = $this->db->query('select * from studenttb where program_id = 1');
+        return $query->result();
+    }
+
+    function get_agric_students(){
+        $query = $this->db->query('select * from studenttb where program_id = 8');
+        return $query->result();
+    }
+
+    function get_anatomy_students(){
+        $query = $this->db->query('select * from studenttb where program_id = 6');
+        return $query->result();
+    }
+
+    function get_compsc_students(){
+        $query = $this->db->query('select * from studenttb where program_id = 7');
+        return $query->result();
+    }
 }

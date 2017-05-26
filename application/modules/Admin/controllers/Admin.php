@@ -15,7 +15,10 @@ class Admin extends MY_Controller{
         $data['page_title'] = 'Dashboard';
         $data['desc_students'] = 'Total Registered Students';
         $data['num_students'] = count($this->M_Student->get_students());
-       // $data['num_accouning_students'] = count($this->M_Publications->get_active_publications());
+        $data['num_accouning_students'] = count($this->M_Student->get_acc_students());
+        $data['num_agric_students'] = count($this->M_Student->get_agric_students());
+        $data['num_anatomy_students'] = count($this->M_Student->get_anatomy_students());
+        $data['num_compsc_students'] = count($this->M_Student->get_compsc_students());
         $data['content_view'] = 'Admin/dashboard_view';
         $this->templates->call_admin_template($data);
 	}

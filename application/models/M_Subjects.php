@@ -8,7 +8,7 @@ class M_Subjects extends CI_Model
     }
 
     function get_subjects(){
-    	$query = $this->db->query('select * from subjecttb');
+    	$query = $this->db->query('select * from subjecttb order by subject_name ASC');
     	return $query->result();
     }
 

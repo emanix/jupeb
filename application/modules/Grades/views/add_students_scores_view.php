@@ -15,21 +15,21 @@
                   <label class="col-sm-3 control-label">Attendance</label>
 
                   <div class="col-sm-9">
-                    <input  type="number" class="form-control" id="inputEmail3" name="attendance" value="0">
+                    <input  type="number" class="form-control" id="inputEmail3" name="attendance" value="<?php echo $attendance; ?>">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-3 control-label">Quiz</label>
 
                   <div class="col-sm-9">
-                    <input  type="number" class="form-control" id="inputEmail3" name="quiz" value="0">
+                    <input  type="number" class="form-control" id="inputEmail3" name="quiz" value="<?php echo $quiz; ?>">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-3 control-label">Assignment</label>
 
                   <div class="col-sm-9">
-                    <input  type="number" class="form-control" id="inputEmail3" name="assignment" value="0">
+                    <input  type="number" class="form-control" id="inputEmail3" name="assignment" value="<?php echo $assignment; ?>">
                   </div>
                 </div>              
                 
@@ -37,7 +37,7 @@
                   <label class="col-sm-3 control-label">Mid Semester</label>
 
                   <div class="col-sm-9">
-                    <input  type="number" class="form-control" id="inputEmail3" name="midsem" value="0">
+                    <input  type="number" class="form-control" id="inputEmail3" name="midsem" value="<?php echo $mid_semester; ?>">
                   </div>
                 </div>
 
@@ -45,7 +45,7 @@
                   <label class="col-sm-3 control-label">Exam</label>
 
                   <div class="col-sm-9">
-                    <input  type="number" class="form-control" id="inputEmail3" name="exam" value="0">
+                    <input  type="number" class="form-control" id="inputEmail3" name="exam" value="<?php echo $exam; ?>">
                   </div>
                 </div>
               </div>                

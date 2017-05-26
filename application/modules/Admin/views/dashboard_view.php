@@ -57,7 +57,7 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>53</h3>
+              <h3><?php echo $num_accouning_students; ?></h3>
 
               <p>Students in Accounting</p>
             </div>
@@ -72,7 +72,7 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3><?php echo $num_students ?></h3>
+              <h3><?php echo $num_agric_students ?></h3>
 
               <p>Students in Agric Ext</p>
             </div>
@@ -85,9 +85,24 @@
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
+          <div class="small-box bg-blue">
+            <div class="inner">
+              <h3><?php echo $num_anatomy_students ?></h3>
+
+              <p>Students in Anatomy</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-person"></i>
+            </div>
+            
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>65</h3>
+              <h3><?php echo $num_compsc_students ?></h3>
 
               <p>Students in Computer Science</p>
             </div>

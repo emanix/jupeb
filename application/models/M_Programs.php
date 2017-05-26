@@ -8,7 +8,7 @@ class M_Programs extends CI_Model
     }
 
     function get_programs(){
-    	$query = $this->db->query('select * from programtb');
+    	$query = $this->db->query('select * from programtb order by program_name ASC');
     	return $query->result();
     }
 
