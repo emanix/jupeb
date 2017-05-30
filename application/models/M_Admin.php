@@ -24,6 +24,11 @@ class M_Admin extends CI_Model
 
     }
 
+    function get_semester_by_name($name){
+        $query = $this->db->query('select * from semestertb where semester_name = "'.$name.'" ');
+        return $query->result();
+    }
+
     function get_session_by_id($sid){
         $query = $this->db->query('select * from sessiontb where sid = "'.$sid.'" ');
         return $query->result();

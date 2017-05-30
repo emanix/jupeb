@@ -149,13 +149,41 @@ class Grades extends MY_Controller{
 					
 					$get_scores = $this->M_Grades->get_scores_by_subid($value->subid);
 						foreach ($get_scores as $key => $value) {
-							$grading_table .= "<td>{$value->attendance}</td>";
-							$grading_table .= "<td>{$value->quiz}</td>";
-							$grading_table .= "<td>{$value->assignment}</td>";
-							$grading_table .= "<td>{$value->mid_semester}</td>";
-							$grading_table .= "<td>{$value->exam}</td>";
-							$grading_table .= "<td>{$value->total}</td>";
-							$grading_table .= "<td>{$value->percentage}</td>";
+							if($value->attendance == 0){
+								$grading_table .= "<td>NG</td>";
+							}else{
+								$grading_table .= "<td>{$value->attendance}</td>";
+							}
+							if($value->quiz == 0){
+								$grading_table .= "<td>NG</td>";
+							}else{
+								$grading_table .= "<td>{$value->quiz}</td>";
+							}
+							if($value->assignment == 0){
+								$grading_table .= "<td>NG</td>";
+							}else{
+								$grading_table .= "<td>{$value->assignment}</td>";
+							}
+							if($value->mid_semester == 0){
+								$grading_table .= "<td>NG</td>";
+							}else{
+								$grading_table .= "<td>{$value->mid_semester}</td>";
+							}
+							if($value->exam == 0){
+								$grading_table .= "<td>NG</td>";
+							}else{
+								$grading_table .= "<td>{$value->exam}</td>";
+							}
+							if($value->total == 0){
+								$grading_table .= "<td>NG</td>";
+							}else{
+								$grading_table .= "<td>{$value->total}</td>";
+							}
+							if($value->percentage == 0){
+								$grading_table .= "<td>NG</td>";
+							}else{
+								$grading_table .= "<td>{$value->percentage}</td>";
+							}
 						}
 					$grading_table .="<td><a href='".base_url()."Grades/input_students_scores/{$value->subid}'> <i class='material-icons'>Edit Grade</i></a></td>";
 					

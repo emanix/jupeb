@@ -47,7 +47,7 @@ class Admin extends MY_Controller{
 				$sessions_table .="<tr>";
 				$sessions_table .="<td>{$incrementer}</td>";
 				$sessions_table .="<td>{$value->session_name}</td>";
-				$sessions_table .="<td><a href='".base_url()."Admin/edit_session/{$value->sid}'> <i class='material-icons'>Edit</i></a></td>";
+				$sessions_table .="<td><a href='".base_url()."Admin/edit_session/{$value->sid}'> <i class='material-icons'>Edit Session</i></a></td>";
 				$incrementer++;
 			}
 			return $sessions_table;

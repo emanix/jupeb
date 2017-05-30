@@ -16,7 +16,7 @@ class M_Student extends CI_Model{
     }
 
     function get_session_details(){
-        $query = $this->db->query('select * from sessiontb');
+        $query = $this->db->query('select * from semestertb');
         return $query->result();
     }
 
@@ -26,7 +26,7 @@ class M_Student extends CI_Model{
     }
 
     function add_students($matric, $stdname, $sid, $pid){
-        $query = array ('matric_no' => $matric, 'student_name' => $stdname, 'session_id' => $sid, 'program_id' => $pid);
+        $query = array ('matric_no' => $matric, 'student_name' => $stdname, 'semester_id' => $sid, 'program_id' => $pid);
         $this->db->insert('studenttb', $query);
 
     }

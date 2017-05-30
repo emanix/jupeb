@@ -42,10 +42,10 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-3 control-label">Session:</label>
+                  <label for="inputEmail3" class="col-sm-3 control-label">Semester:</label>
                   <div class="col-sm-9">
                   <select class="form-control" name="sid" style="width: 80%;">
-                    <option>Select Session</option>
+                    <option>Select Semester</option>
                     <?php echo $sessions; ?>
                   </select>
                   </div>
@@ -119,6 +119,49 @@
           </div>
         </div>
       </div>
+      <div class="row">
+          <div class="col-md-6">
+            <!-- Horizontal Form -->
+            <div class="box box-info">
+              <div class="box-header with-border">
+                <h3 class="box-title">Batch Upload.</h3>
+                <span> Upload students details from excel file</span>
+              </div>
+              <?php if (isset($_SESSION['failed'])) {?>
+                    <div class="alert alert-warning">
+                        <strong>Warning!</strong> <?php  echo $_SESSION['failed'];?>
+                    </div>
+                <?php } ?>
+
+                <?php if (isset($_SESSION['message'])) {?>
+                    <div class="alert alert-success">
+                        <?php  echo $_SESSION['message'];?>
+                    </div>
+                <?php } ?>
+
+                <?php if (validation_errors() !="") {?>
+                    <div class="alert alert-danger">
+                        <?php echo validation_errors(); ?>
+                    </div>
+                <?php } ?>
+              <form class="form-horizontal" method="POST" action="<?php echo base_url(); ?>Students/batch_upload" enctype="multipart/form-data">
+                <div class="box-body">
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Add file</label>
+
+                    <div class="col-sm-9">
+                      <input  type="file" name="stdfile">
+                      <label>File format: excel file (.csv)</label>
+                    </div>
+                  </div>
+                  <div class="box-footer">
+                  <button type="submit" class="btn btn-info pull-right" name="upload">Upload</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
 </section>
 
   <?php 

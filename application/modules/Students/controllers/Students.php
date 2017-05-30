@@ -6,7 +6,7 @@ class Students extends MY_Controller{
     {
         parent::__construct();
         $this->load->module(['Templates']);
-        $this->load->model(['M_Student', 'M_Subjects', 'M_Grades']);
+        $this->load->model(['M_Student', 'M_Subjects', 'M_Grades', 'M_Programs', 'M_Admin']);
         
     }
 
@@ -52,7 +52,7 @@ class Students extends MY_Controller{
         $options = "";
         if (count($sessions)){
             foreach ($sessions as $key => $value){
-                $options .= "<option value = '{$value->sid}'>{$value->session_name}</option>";
+                $options .= "<option value = '{$value->semid}'>{$value->semester_name}</option>";
             }
         }
         return $options;
@@ -355,4 +355,51 @@ class Students extends MY_Controller{
         	redirect(base_url() . 'Students/add_students');
 		}
 	}
+
+  function batch_upload(){
+
+    if(isset($_POST["upload"])){
+      if (!empty($_FILES['stdfile']['name'])){
+        $stddetail = $_FILES['stdfile']['tmp_name'];
+        if($_FILES['stdfile']['size'] > 0){
+
+          if (($opfile = fopen($stddetail, "r")) !== FALSE){
+            while (($data = fgetcsv($opfile, ",")) !== FALSE){
+               
+              $pname = $this->M_Programs->get_program_by_name($data[3]);
+              $semname = $this->M_Admin->get_semester_by_name($data[2]);
+
+              $pid = ""; $semid = "";
+              foreach ($pname as $key => $value) {
+                $pid = $value->pid;
+              }
+
+              foreach ($semname as $key => $value) {
+                $semid = $value->semid;
+              }
+              
+              $this->M_Student->add_students($data[0], $data[1], $semid, $pid);
+             
+              $subjects = $this->M_Subjects->get_subject_pid($pid);
+              $student = $this->M_Student->get_student_by_name($data[1]);
+              $stdid = "";
+              foreach ($student as $key => $value) {
+                $stdid = $value->stdid;
+              }
+
+              foreach ($subjects as $key => $value) {
+                $this->M_Grades->insert_into_gradestb($stdid, $pid, $value->sid);
+              }
+            }
+            fclose($opfile);
+            $this->session->set_flashdata('message', 'Students details uploaded successfully');
+            $this->add_students();
+          }else{
+            $this->session->set_flashdata('message', 'Failed to upload, check your file format');
+            $this->add_students();
+          }
+        }
+      }
+    }
+  }
 }

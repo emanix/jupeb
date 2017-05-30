@@ -17,6 +17,11 @@ class M_Programs extends CI_Model
         return $query->result();
     }
 
+    function get_program_by_name($name){
+        $query = $this->db->query('select * from programtb where program_name = "'.$name.'" ');
+        return $query->result();
+    }
+
     function add_programs($name){
     	$query = array ('program_name' => $name);
     	$this->db->insert('programtb', $query);
