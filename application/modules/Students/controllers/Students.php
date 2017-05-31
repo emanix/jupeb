@@ -52,7 +52,7 @@ class Students extends MY_Controller{
         $options = "";
         if (count($sessions)){
             foreach ($sessions as $key => $value){
-                $options .= "<option value = '{$value->semid}'>{$value->semester_name}</option>";
+                $options .= "<option value = '{$value->sid}'>{$value->session_name}</option>";
             }
         }
         return $options;
@@ -96,13 +96,25 @@ class Students extends MY_Controller{
           //new items comes here
           $subjects = $this->M_Subjects->get_subject_pid($pid);
           $student = $this->M_Student->get_student_by_name($stdname);
-          $stdid = "";
+          $stdid = ""; $session_id = "";
           foreach ($student as $key => $value) {
             $stdid = $value->stdid;
+            $session_id = $value->session_id;
           }
 
-          foreach ($subjects as $key => $value) {
-            $this->M_Grades->insert_into_gradestb($stdid, $pid, $value->sid);
+          $session_name = $this->M_Admin->get_session_by_id($session_id);
+          foreach ($session_name as $key => $session) {
+            $sesname=$session->session_name;
+            
+            for($counter = 1; $counter <= 2; $counter++){
+              $semester = $this->M_Admin->get_semester_by_name("$sesname.$counter");
+              foreach ($semester as $key => $sem) {
+                $semid = $sem->semid; 
+                foreach ($subjects as $key => $subject) {
+                  $this->M_Grades->insert_into_gradestb($stdid, $pid, $subject->sid, $semid);
+                }
+              } 
+            }
           }
 	    	}
 	    }
@@ -367,20 +379,20 @@ class Students extends MY_Controller{
             while (($data = fgetcsv($opfile, ",")) !== FALSE){
                
               $pname = $this->M_Programs->get_program_by_name($data[3]);
-              $semname = $this->M_Admin->get_semester_by_name($data[2]);
+              $sessionname = $this->M_Admin->get_session_by_name($data[2]);
 
-              $pid = ""; $semid = "";
+              $pid = ""; $sid = "";
               foreach ($pname as $key => $value) {
                 $pid = $value->pid;
               }
 
-              foreach ($semname as $key => $value) {
-                $semid = $value->semid;
+              foreach ($sessionname as $key => $value) {
+                $sid = $value->sid;
               }
               
-              $this->M_Student->add_students($data[0], $data[1], $semid, $pid);
+              $this->M_Student->add_students($data[0], $data[1], $sid, $pid);
              
-              $subjects = $this->M_Subjects->get_subject_pid($pid);
+              /*$subjects = $this->M_Subjects->get_subject_pid($pid);
               $student = $this->M_Student->get_student_by_name($data[1]);
               $stdid = "";
               foreach ($student as $key => $value) {
@@ -389,6 +401,28 @@ class Students extends MY_Controller{
 
               foreach ($subjects as $key => $value) {
                 $this->M_Grades->insert_into_gradestb($stdid, $pid, $value->sid);
+              }*/
+              $subjects = $this->M_Subjects->get_subject_pid($pid);
+              $student = $this->M_Student->get_student_by_name($data[1]);
+              $stdid = ""; $session_id = "";
+              foreach ($student as $key => $value) {
+                $stdid = $value->stdid;
+                $session_id = $value->session_id;
+              }
+
+              $session_name = $this->M_Admin->get_session_by_id($session_id);
+              foreach ($session_name as $key => $session) {
+                $sesname=$session->session_name;
+                
+                for($counter = 1; $counter <= 2; $counter++){
+                  $semester = $this->M_Admin->get_semester_by_name("$sesname.$counter");
+                  foreach ($semester as $key => $sem) {
+                    $semid = $sem->semid; 
+                    foreach ($subjects as $key => $subject) {
+                      $this->M_Grades->insert_into_gradestb($stdid, $pid, $subject->sid, $semid);
+                    }
+                  } 
+                }
               }
             }
             fclose($opfile);

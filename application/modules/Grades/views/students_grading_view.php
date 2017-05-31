@@ -12,7 +12,7 @@
                 <tr>
                   <th>Serial No</th>
                   <th>Program Name</th>
-                  <th>View Students</th>
+                  <!--<th>View Students</th>-->
                 </tr>
                 </thead>
                 
@@ -20,7 +20,7 @@
                 <tr>
                   <th>Serial No</th>
                   <th>Program Name</th>
-                  <th>View Students</th>
+                  <!--<th>View Students</th>-->
                 </tr>
                 </tfoot>
                 <tbody>
@@ -41,6 +41,7 @@
             <!-- /.box-body -->
           </div>
          </div>
+      </div>
       <!-- /.row -->
-  </section>
+</section>
  

@@ -42,10 +42,10 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-3 control-label">Semester:</label>
+                  <label for="inputEmail3" class="col-sm-3 control-label">Session:</label>
                   <div class="col-sm-9">
                   <select class="form-control" name="sid" style="width: 80%;">
-                    <option>Select Semester</option>
+                    <option>Select Session</option>
                     <?php echo $sessions; ?>
                   </select>
                   </div>

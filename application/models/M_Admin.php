@@ -29,6 +29,11 @@ class M_Admin extends CI_Model
         return $query->result();
     }
 
+    function get_session_by_name($name){
+        $query = $this->db->query('select * from sessiontb where session_name = "'.$name.'" ');
+        return $query->result();
+    }
+
     function get_session_by_id($sid){
         $query = $this->db->query('select * from sessiontb where sid = "'.$sid.'" ');
         return $query->result();

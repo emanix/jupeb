@@ -5,7 +5,7 @@ class Grades extends MY_Controller{
 	function __construct(){
 
 		parent::__construct();
-		$this->load->model(['M_Programs', 'M_Subjects', 'M_Student', 'M_Grades']);
+		$this->load->model(['M_Programs', 'M_Subjects', 'M_Student', 'M_Grades', 'M_Admin']);
 		$this->load->module('Templates');
 	}
 
@@ -17,12 +17,100 @@ class Grades extends MY_Controller{
         $data['page_title'] = 'Manage Students Grades';
         $data['optional_description'] = 'Grade students of each program';
         //$data['desc_students'] = 'Add current session';
-        $data['programs_table'] = $this->create_programs_table();
+        $data['sessions'] = $this->session_select();
+        $data['semester_table'] = "";
+        $data['content_view'] = 'Grades/grading_view';
+        $this->templates->call_admin_template($data);
+	}
+
+	function manage_grade(){
+
+		$data['student_records'] = 'Students Management';
+		//$data['add_program'] = 'Add Program';
+        $data['view_program'] = 'Semester View';
+        $data['page_title'] = 'Manage Students Grades';
+        $data['optional_description'] = 'Grade students of each program';
+        //$data['desc_students'] = 'Add current session';
+        $data['sessions'] = $this->session_select();
+        $data['semester_table'] = $this->session_selected();
+        $data['content_view'] = 'Grades/grading_view';
+        $this->templates->call_admin_template($data);
+	}
+
+	function session_selected(){
+		if($this->input->post()){
+			$sessionname = $this->M_Admin->get_session_by_id($this->input->post('sesid'));
+			$semester_table = "";
+
+			foreach ($sessionname as $key => $session) {
+	            $sesname=$session->session_name;
+	            
+	            for($counter = 1; $counter <= 2; $counter++){
+	              $semester = $this->M_Admin->get_semester_by_name("$sesname.$counter");
+	              foreach ($semester as $key => $sem) {
+	                $semester_table .= "<tr>"; 
+	                $semester_table .= "<td>$counter</td>";
+	                $semester_table .= "<td>{$sem->semester_name}</td>";
+	                $semester_table .= "<td><a href='".base_url()."Grades/semester_select/{$sem->semid}'> <i class='material-icons'>Show Programs</i></a></td>";
+	              } 
+	            }
+            }
+		}
+		return $semester_table;
+	}
+
+	function semester_select($id){
+		$this->session->set_userdata('semest_id', $id);
+		$programsid = $this->M_Grades->get_programs_by_semid($id);
+		$programs = "";
+		$semname = $this->M_Grades->get_semname_by_id($id);
+		foreach ($semname as $key => $value) {
+			$semestername = $value->semester_name;
+			$this->session->set_userdata('semest_name', $semestername);
+		}
+		$programs_table = "";
+		foreach ($programsid as $key => $pid) {
+			//$incrementer = 1;
+			$programs = $this->M_Programs->get_program_by_id($pid->progid);
+			
+			if (count($programs)>0){
+				
+				foreach ($programs as $key => $value) {
+					$programs_table .="<tr>";
+					//$programs_table .="<td>$incrementer</td>";
+					$programs_table .="<td>{$value->program_name}</td>";
+					$programs_table .="<td><a href='".base_url()."Grades/view_students_grades/{$value->pid}'> <i class='material-icons'>View Students</i></a></td>";
+					//$incrementer++;
+				}
+			}
+			//$incrementer++;
+			$programs_table .="</tr>";
+		}
+
+		$data['student_records'] = 'Students Management';
+		//$data['add_program'] = 'Add Program';
+        $data['view_program'] = 'List of Programs ('.$semestername.')';
+        $data['page_title'] = 'Manage Students Grades';
+        $data['optional_description'] = 'Grade students of each program';
+        //$data['desc_students'] = 'Add current session';
+        $data['programs_table'] = $programs_table;
         $data['content_view'] = 'Grades/students_grading_view';
         $this->templates->call_admin_template($data);
 	}
 
-	function create_programs_table(){
+	function session_select(){
+
+        $sessions = $this->M_Student->get_session_details();
+        $options = "";
+        if (count($sessions)){
+            foreach ($sessions as $key => $value){
+                $options .= "<option value = '{$value->sid}'>{$value->session_name}</option>";
+            }
+        }
+        return $options;
+    }
+
+	/*function create_programs_table(){
 		
 		$programs = $this->M_Programs->get_programs();
 
@@ -39,7 +127,7 @@ class Grades extends MY_Controller{
 			}
 			return $programs_table;
 		}
-	}
+	}*/
 
 	function view_students_grades($id){
 		//Get program name.
@@ -119,7 +207,7 @@ class Grades extends MY_Controller{
 
 		$data['student_records'] = 'Students Management';
 		//$data['add_program'] = 'Add Program';
-        $data['view_students'] = 'List of '.$program_name.' Students';
+        $data['view_students'] = 'List of '.$program_name.' Students ('.$this->session->userdata('semest_name').')';
         $data['page_title'] = 'Manage Students Grades';
         $data['optional_description'] = 'Grade each students in '.$program_name.'';
         //$data['desc_students'] = 'Add current session';
