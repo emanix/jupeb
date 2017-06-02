@@ -155,6 +155,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </ul>
         </li>
         <li><a href="<?php echo base_url(); ?>Grades/manage_grades"><i class="fa fa-laptop"></i> <span>Manage Studens' Grades</span></a></li>
+        <li><a href="<?php echo base_url(); ?>Reporting/reports"><i class="fa fa-table"></i> <span>Generate Reports</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
