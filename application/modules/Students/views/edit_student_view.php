@@ -1,3 +1,12 @@
+<div class="adjustbread">
+<section class="content-header">
+   <ol class="breadcrumb">
+     <li><a href="<?php echo base_url(); ?>Admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+     <li><a href="<?php echo base_url(); ?>Students/add_students"><i class="active"></i> Add students</a></li>
+     <li class="active">Edit student</li>
+   </ol>
+</section>
+</div>
 <section class="content">
       <div class="row">
          <div class="col-md-6">

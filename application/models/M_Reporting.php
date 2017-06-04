@@ -27,11 +27,28 @@ class M_Reporting extends CI_Model{
         return $query->result();
     }
 
+    function get_program_by_id(){
+        $query = $this->db->query('select * from programtb where pid = "'.$this->input->post('progid', TRUE).'"');
+        return $query->result();
+    }
+
     function get_scores(){
     	$this->db->select('*');
         $this->db->from('gradestb');
         $this->db->join('studenttb', 'studenttb.stdid = gradestb.stdid');
         $this->db->where('subid', $this->input->post('subid', TRUE));
+        $this->db->where('sem_id', $this->input->post('semid', TRUE));
+        $this->db->order_by('studenttb.student_name');
+        $query = $this->db->get();
+        //$query = $this->db->query('select * from gradestb where subid = "'.$this->input->post('subid', TRUE).'" and sem_id = "'.$this->input->post('semid', TRUE).'"');
+        return $query->result();
+    }
+
+    function get_grades(){
+        $this->db->select('*');
+        $this->db->from('gradestb');
+        $this->db->join('studenttb', 'studenttb.stdid = gradestb.stdid');
+        $this->db->where('progid', $this->input->post('progid', TRUE));
         $this->db->where('sem_id', $this->input->post('semid', TRUE));
         $this->db->order_by('studenttb.student_name');
         $query = $this->db->get();

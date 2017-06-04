@@ -1,3 +1,14 @@
+<div class="adjustbread">
+<section class="content-header">
+   <ol class="breadcrumb">
+     <li><a href="<?php echo base_url(); ?>Admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+     <li><a href="<?php echo base_url(); ?>Grades/manage_grades"><i class="active"></i> Select session</a></li>
+     <li><a href="<?php echo base_url(); ?>Grades/semester_select/<?php echo $this->session->userdata('semest_id'); ?>"><i class="active"></i> Show programs</a></li>
+     <li><a href="<?php echo base_url(); ?>Grades/view_students_grades/<?php echo $this->session->userdata('proid'); ?>"><i class="active"></i> View students</a></li>
+     <li class="active">Subjects list</li>
+   </ol>
+</section>
+</div>
 <section class="content">
       <div class="row">
         <div class="col-xs-12">

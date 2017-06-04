@@ -62,7 +62,7 @@ class Programs extends MY_Controller{
 	}
 
 	function edit_program($id){
-		
+		//$this->session->set_userdata('prograid' $id);
 		$pid = $this->M_Programs->get_program_by_id($id);
 
 		//creates the program name field and populates it with the program to be edited

@@ -334,7 +334,7 @@ class Grades extends MY_Controller{
         $data['view_students'] = 'Add the scores of '.$this->session->userdata('studentna').' in each subject';
         $data['page_title'] = 'Manage Students Grades';
         $data['optional_description'] = 'Add scores for '.$this->session->userdata('studentna').'.';
-        $data['add_scores'] = 'Add scores for '.$this->session->userdata('subname').'';
+        $data['add_scores'] = 'Add or Edit '.$this->session->userdata('studentna').'`s scores for '.$this->session->userdata('subname').'';
         $data['attendance'] = $attendance;
         $data['quiz'] = $quiz;
         $data['assignment'] = $assignment;

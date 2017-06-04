@@ -30,6 +30,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/dist/css/skins/skin-blue.min.css">
 
+  <!-- Custom Css -->
+  <link href="<?php echo base_url(); ?>assets/css/bread.css" rel="stylesheet">
+
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -170,10 +173,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <?php echo $page_title; ?>
         <small><?php echo $optional_description; ?></small>
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>
+      
     </section>
 
     <!-- Main content -->

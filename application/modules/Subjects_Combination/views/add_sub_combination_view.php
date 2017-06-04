@@ -1,3 +1,13 @@
+<div class="adjustbread">
+    <!-- Content Header (Page header) -->
+<section class="content-header">
+   <ol class="breadcrumb">
+     <li><a href="<?php echo base_url(); ?>Admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+     <li><a href="<?php echo base_url(); ?>Subjects_Combination/combine_subjects"><i class="active"></i>Manage Subject Combination</a></li>
+     <li class="active">Add Subject Combination</li>
+   </ol>
+</section>
+</div>
 <section class="content">
       <div class="row">
          <div class="col-md-6">
