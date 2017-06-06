@@ -154,7 +154,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </a>
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url(); ?>Students/add_students">Add Students</a></li>
-            <!--<li><a href="<?php //echo base_url(); ?>Students/view_students">View & Edit Students Details</a></li>-->
+            <li><a href="<?php echo base_url(); ?>Students/view_students">View & Edit Students Details</a></li>
           </ul>
         </li>
         <li><a href="<?php echo base_url(); ?>Grades/manage_grades"><i class="fa fa-laptop"></i> <span>Manage Studens' Grades</span></a></li>

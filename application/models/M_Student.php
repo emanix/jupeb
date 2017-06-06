@@ -46,6 +46,18 @@ class M_Student extends CI_Model{
         return $query->result();
     }
 
+    function get_student_by_programs($pid, $sesid){
+        //$query = $this->db->query('select * from studenttb where Program_id = "'.$pid.'" ');
+        $this->db->distinct();
+        $this->db->from('studenttb');
+        //$this->db->join('gradestb', 'gradestb.sem_id = "'.$this->session->userdata('semest_id').'"');
+        $this->db->where('Program_id', $pid);
+        $this->db->where('session_id', $sesid);
+        $this->db->order_by('studenttb.student_name');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     function get_program_name($pid){
         $query = $this->db->query('select program_name from programtb where pid = "'.$pid.'" ');
         return $query->result();

@@ -24,17 +24,28 @@ class Grades extends MY_Controller{
 	}
 
 	function manage_grade(){
+		$this->load->library('form_validation');
 
-		$data['student_records'] = 'Students Management';
-		//$data['add_program'] = 'Add Program';
-        $data['view_program'] = 'Semester View';
-        $data['page_title'] = 'Manage Students Grades';
-        $data['optional_description'] = 'Grade students of each program';
-        //$data['desc_students'] = 'Add current session';
-        $data['sessions'] = $this->session_select();
-        $data['semester_table'] = $this->session_selected();
-        $data['content_view'] = 'Grades/grading_view';
-        $this->templates->call_admin_template($data);
+        $this->form_validation->set_rules('sesid', 'Select Session', 'required');
+        // if validation fails
+        if ($this->form_validation->run() == FALSE){
+            $this->manage_grades();
+            
+        }
+        else
+        {
+
+			$data['student_records'] = 'Students Management';
+			//$data['add_program'] = 'Add Program';
+	        $data['view_program'] = 'Semester View';
+	        $data['page_title'] = 'Manage Students Grades';
+	        $data['optional_description'] = 'Grade students of each program';
+	        //$data['desc_students'] = 'Add current session';
+	        $data['sessions'] = $this->session_select();
+	        $data['semester_table'] = $this->session_selected();
+	        $data['content_view'] = 'Grades/grading_view';
+	        $this->templates->call_admin_template($data);
+    	}
 	}
 
 	function session_selected(){
@@ -66,7 +77,9 @@ class Grades extends MY_Controller{
 		$semname = $this->M_Grades->get_semname_by_id($id);
 		foreach ($semname as $key => $value) {
 			$semestername = $value->semester_name;
+			$seid = $value->semid;
 			$this->session->set_userdata('semest_name', $semestername);
+			$this->session->set_userdata('semestid', $seid);
 		}
 		$programs_table = "";
 		foreach ($programsid as $key => $pid) {
@@ -176,9 +189,15 @@ class Grades extends MY_Controller{
    		$grade_table .= "<tbody>";
    		
    		$counter = 1;
-   		$student = $this->M_Student->get_student_by_program($id);
+ 		$ses_name = substr($this->session->userdata('semest_name'), 0, 9);
+ 		$sesid = $this->M_Grades->get_sesid_by_name($ses_name);
+ 		foreach ($sesid as $key => $ses) {
+ 			$ses_id = $ses->sid;
+ 		}
+   		$student = $this->M_Student->get_student_by_programs($id, $ses_id);
    		//Check if there are registered students for the program.
    		if(count($student) > 0){
+   			//print_r(count($student)); print_r($student); die;
 	   		foreach ($student as $key => $value) {
 	    		$grade_table .="<tr>";
 				$grade_table .="<td>{$counter}</td>";

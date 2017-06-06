@@ -13,12 +13,24 @@ class Students extends MY_Controller{
     function add_students(){
     	$data['student_records'] = 'Students Management';
         $data['page_title'] = 'Manage Students Details';
-        $data['optional_description'] = 'Add Students details, search details by matric number and program';
+        $data['optional_description'] = 'Add Students details';
         $data['add_students'] = 'Add Students';
         $data['sessions'] = $this->session_select();
         $data['programs'] = $this->program_select();
-        $data['student_tables'] = '';
+        //$data['student_tables'] = '';
         $data['content_view'] = 'Students/add_students_view';
+        $this->templates->call_admin_template($data);
+    }
+
+    function view_students(){
+      $data['student_records'] = 'Students Management';
+        $data['page_title'] = 'Manage Students Details';
+        $data['optional_description'] = 'Search details by matric number and program';
+        $data['add_students'] = 'Add Students';
+        //$data['sessions'] = $this->session_select();
+        $data['programs'] = $this->program_select();
+        $data['student_tables'] = '';
+        $data['content_view'] = 'Students/view_students_view';
         $this->templates->call_admin_template($data);
     }
 
@@ -30,7 +42,7 @@ class Students extends MY_Controller{
         $data['sessions'] = $this->session_select();
         $data['programs'] = $this->program_select();
         $data['student_tables'] = $this->search_students_matric();
-        $data['content_view'] = 'Students/add_students_view';
+        $data['content_view'] = 'Students/view_students_view';
         $this->templates->call_admin_template($data);
     }
 
@@ -42,7 +54,7 @@ class Students extends MY_Controller{
         $data['sessions'] = $this->session_select();
         $data['programs'] = $this->program_select();
         $data['student_tables'] = $this->search_students_program();
-        $data['content_view'] = 'Students/add_students_view';
+        $data['content_view'] = 'Students/view_students_view';
         $this->templates->call_admin_template($data);
     }
 
@@ -130,8 +142,9 @@ class Students extends MY_Controller{
     		$student_table = "";
 
     		if (count($student) > 0){
+          $student_table .= "<div id='list_student'>";
     			$student_table .= "<section class='content'>";
-    			$student_table .= "<div class='row'>";
+    			$student_table .= "<div class='row'id='list_student'>";
     			$student_table .= "<div class='col-xs-12'>";
     			$student_table .= "<div class='box'>";
     			$student_table .= "<div class='box-header'>";
@@ -179,7 +192,9 @@ class Students extends MY_Controller{
    				$student_table .= "</div>";
    				$student_table .= "</div>";
    				$student_table .= "</section>";
+          $student_table .= "</div>";
     		}else{
+          $student_table .= "<div id='list_student'>";
     			$student_table .= "<section class='content'>";
     			$student_table .= "<div class='row'>";
     			$student_table .= "<div class='col-xs-12'>";
@@ -216,6 +231,7 @@ class Students extends MY_Controller{
    				$student_table .= "</div>";
    				$student_table .= "</div>";
    				$student_table .= "</section>";
+          $student_table .= "</div>";
     		}
     	}
     	

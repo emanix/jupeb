@@ -6,13 +6,30 @@
             <div class="box-header with-border">
               <h3 class="box-title">Select Subject and semester to be generated.</h3>
             </div>
-            <form class="form-horizontal" method="POST" action="<?php echo base_url(); ?>Reporting/subjects_report">
+            <?php if (isset($_SESSION['failed'])) {?>
+                    <div class="alert alert-warning">
+                        <strong>Warning!</strong> <?php  echo $_SESSION['failed'];?>
+                    </div>
+                <?php } ?>
+
+                <?php if (isset($_SESSION['message'])) {?>
+                    <div class="alert alert-success">
+                        <?php  echo $_SESSION['message'];?>
+                    </div>
+                <?php } ?>
+
+                <?php if (validation_errors() !="") {?>
+                    <div class="alert alert-danger">
+                        <?php echo validation_errors(); ?>
+                    </div>
+                <?php } ?>
+            <form target="_blank" [....] class="form-horizontal" method="POST" action="<?php echo base_url(); ?>Reporting/subjects_report">
               <div class="box-body">
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-3 control-label">Semester: </label>
                   <div class="col-sm-9">
                   <select class="form-control" name="semid" style="width: 100%;">
-                    <option>Select Semester</option>
+                    <option value="">Select Semester</option>
                     <?php echo $semesters; ?>
                   </select>
                   </div>
@@ -21,7 +38,7 @@
                   <label for="inputEmail3" class="col-sm-3 control-label">Subject: </label>
                   <div class="col-sm-9">
                   <select class="form-control" name="subid" style="width: 100%;">
-                    <option>Select Subject</option>
+                    <option value="">Select Subject</option>
                     <?php echo $subjects; ?>
                   </select>
                   </div>
@@ -33,19 +50,36 @@
             </form>
           </div>
         </div>
-   <?php /*   <div class="col-md-6"> ?>
+   <div class="col-md-6"> 
           <!-- Horizontal Form -->
           <div class="box box-info">
             <div class="box-header with-border">
               <h3 class="box-title">Select Program and semester to be generated.</h3>
             </div>
-            <form class="form-horizontal" method="POST" action="<?php echo base_url(); ?>Reporting/programs_report">
+            <?php if (isset($_SESSION['failed'])) {?>
+                    <div class="alert alert-warning">
+                        <strong>Warning!</strong> <?php  echo $_SESSION['failed'];?>
+                    </div>
+                <?php } ?>
+
+                <?php if (isset($_SESSION['message'])) {?>
+                    <div class="alert alert-success">
+                        <?php  echo $_SESSION['message'];?>
+                    </div>
+                <?php } ?>
+
+                <?php if (validation_errors() !="") {?>
+                    <div class="alert alert-danger">
+                        <?php echo validation_errors(); ?>
+                    </div>
+                <?php } ?>
+            <form target="_blank" [....] class="form-horizontal" method="POST" action="<?php echo base_url(); ?>Reporting/programs_report">
               <div class="box-body">
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-3 control-label">Semester: </label>
                   <div class="col-sm-9">
                   <select class="form-control" name="semid" style="width: 100%;">
-                    <option>Select Semester</option>
+                    <option value="">Select Semester</option>
                     <?php echo $semesters; ?>
                   </select>
                   </div>
@@ -54,7 +88,7 @@
                   <label for="inputEmail3" class="col-sm-3 control-label">Program: </label>
                   <div class="col-sm-9">
                   <select class="form-control" name="progid" style="width: 100%;">
-                    <option>Select Program</option>
+                    <option value="">Select Program</option>
                     <?php echo $programs; ?>
                   </select>
                   </div>
@@ -65,6 +99,6 @@
               </div>
             </form>
           </div>
-        </div><?php */ ?> 
+        </div> 
   </div>
 </section>

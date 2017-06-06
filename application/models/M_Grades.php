@@ -44,4 +44,9 @@ class M_Grades extends CI_Model{
     	$query = $this->db->query('select * from semestertb where semid = "'.$id.'"');
 		return $query->result();
     }
+
+    function get_sesid_by_name($id){
+        $query = $this->db->query('select * from sessiontb where session_name = "'.$id.'"');
+        return $query->result();
+    }
 }

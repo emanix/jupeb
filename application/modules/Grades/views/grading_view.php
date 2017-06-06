@@ -14,13 +14,30 @@
             <div class="box-header with-border">
               <h3 class="box-title">View session to be graded.</h3>
             </div>
+            <?php if (isset($_SESSION['failed'])) {?>
+                    <div class="alert alert-warning">
+                        <strong>Warning!</strong> <?php  echo $_SESSION['failed'];?>
+                    </div>
+                <?php } ?>
+
+                <?php if (isset($_SESSION['success'])) {?>
+                    <div class="alert alert-success">
+                        <?php  echo $_SESSION['success'];?>
+                    </div>
+                <?php } ?>
+
+                <?php if (validation_errors() !="") {?>
+                    <div class="alert alert-danger">
+                        <?php echo validation_errors(); ?>
+                    </div>
+                <?php } ?>
             <form class="form-horizontal" method="POST" action="<?php echo base_url(); ?>Grades/manage_grade">
               <div class="box-body">
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-3 control-label">Session: </label>
                   <div class="col-sm-9">
                   <select class="form-control" name="sesid" style="width: 100%;">
-                    <option>Select Session</option>
+                    <option value="">Select Session</option>
                     <?php echo $sessions; ?>
                   </select>
                   </div>

@@ -44,6 +44,11 @@ class M_Reporting extends CI_Model{
         return $query->result();
     }
 
+    function get_grades_by_stdid($id){
+        $query = $this->db->query('select * from gradestb where stdid = "'.$id.'" and sem_id = "'.$this->input->post('semid', TRUE).'"');
+        return $query->result();
+    }
+
     function get_grades(){
         $this->db->select('*');
         $this->db->from('gradestb');
