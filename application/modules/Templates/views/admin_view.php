@@ -32,10 +32,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <!-- Custom Css -->
   <link href="<?php echo base_url(); ?>assets/css/bread.css" rel="stylesheet">
-
+  <!-- jQuery 2.2.3 -->
+  <script src="<?php echo base_url(); ?>assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
+  
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
+<script>
+    $(document).ready(function(){
+        $('#example2').dataTable();
+    });
+  </script>
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -132,7 +139,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <ul class="sidebar-menu">
         <li class="header"><h4><?php echo $student_records; ?></h4></li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="<?php echo base_url(); ?>Admin"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <!--<li class="active"><a href="<?php echo base_url(); ?>Admin"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>-->
         <li><a href="<?php echo base_url(); ?>Admin/manage_session"><i class="fa fa-laptop"></i> <span>Manage Session</span></a></li>
         <li class="treeview">
           <a href="#"><i class="fa fa-laptop"></i> <span>Manage Program</span>
@@ -205,16 +212,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- jQuery 2.2.3 -->
 <script src="<?php echo base_url(); ?>assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
-<script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap.min.js"></script>
-<!-- AdminLTE App -->
-<script src="<?php echo base_url(); ?>assets/dist/js/app.min.js"></script>
-<!-- DataTables -->
+<script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap.min.js"></script><!-- DataTables -->
 <script src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <!-- SlimScroll -->
 <script src="<?php echo base_url(); ?>assets/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="<?php echo base_url(); ?>assets/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="<?php echo base_url(); ?>assets/dist/js/app.min.js"></script>
 
 </body>
 </html>

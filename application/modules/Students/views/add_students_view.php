@@ -87,21 +87,21 @@
                 <h3 class="box-title">Batch Upload.</h3>
                 <span> Upload students details from excel file</span>
               </div>
-              <?php if (isset($_SESSION['failed'])) {?>
-                    <div class="alert alert-warning">
-                        <strong>Warning!</strong> <?php  echo $_SESSION['failed'];?>
+              <?php if (isset($_SESSION['fail'])) {?>
+                    <div class="alert alert-danger">
+                        <strong>Warning!</strong> <?php  echo $_SESSION['fail'];?>
+                    </div>
+                <?php } ?>
+
+                <?php if ($matric != "") {?>
+                    <div class="alert alert-danger">
+                       <?php echo $matric; ?>
                     </div>
                 <?php } ?>
 
                 <?php if (isset($_SESSION['message'])) {?>
                     <div class="alert alert-success">
                         <?php  echo $_SESSION['message'];?>
-                    </div>
-                <?php } ?>
-
-                <?php if (validation_errors() !="") {?>
-                    <div class="alert alert-danger">
-                        <?php echo validation_errors(); ?>
                     </div>
                 <?php } ?>
               <form class="form-horizontal" method="POST" action="<?php echo base_url(); ?>Students/batch_upload" enctype="multipart/form-data">

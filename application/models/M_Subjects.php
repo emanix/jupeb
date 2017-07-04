@@ -23,6 +23,12 @@ class M_Subjects extends CI_Model
         return $query->result();
     }
 
+    function get_subject_pidsid($pid, $sid){
+        $query = $this->db->query('select * from subject_combtb where pid = "'.$pid.'" and sid = "'.$sid.'"');
+        
+        return $query->result();
+    }
+
     function add_subjects($name){
     	$query = array ('subject_name' => $name);
     	$this->db->insert('subjecttb', $query);

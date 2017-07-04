@@ -17,7 +17,7 @@ class Students extends MY_Controller{
         $data['add_students'] = 'Add Students';
         $data['sessions'] = $this->session_select();
         $data['programs'] = $this->program_select();
-        //$data['student_tables'] = '';
+        $data['matric'] = $this->session->flashdata('matric');
         $data['content_view'] = 'Students/add_students_view';
         $this->templates->call_admin_template($data);
     }
@@ -86,14 +86,14 @@ class Students extends MY_Controller{
 
     	$this->load->library('form_validation');
 
-		$this->form_validation->set_rules('matric', 'Matric Number', 'required');
+		$this->form_validation->set_rules('matric', 'Matric Number', 'required|is_unique[studenttb.matric_no]', array(
+      'is_unique'     => 'This Matric number already exists.'));
 		$this->form_validation->set_rules('stdname', 'Students Name', 'required');
 		$this->form_validation->set_rules('sid', 'Session Name', 'required');
 		$this->form_validation->set_rules('pid', 'Program Name', 'required');
         // if validation fails
-        if ($this->form_validation->run() == FALSE){
+        if($this->form_validation->run() == FALSE){
             $this->add_students();
-
         }
         else
         {
@@ -128,10 +128,10 @@ class Students extends MY_Controller{
               } 
             }
           }
+          $this->session->set_flashdata('success', 'Students Record added successfully');
+          $this->add_students();
 	    	}
-	    }
-	    $this->session->set_flashdata('success', 'Students Record added successfully');
-	    $this->add_students();
+	    } 
     }
 
     function search_students_program(){
@@ -339,7 +339,7 @@ class Students extends MY_Controller{
     }
 
     function edit_student($id){
-    	$stdid = $this->M_Student->get_student_by_id($id);
+    	$stdid = $this->M_Student->get_student_by_idpro($id);
 		//creates the student name field and populates it with the student to be edited
 		$update_field = "";
 		if(count($stdid) > 0){
@@ -362,8 +362,17 @@ class Students extends MY_Controller{
 			}	
 		}
 
-		$data['student_records'] = 'Students Management';
-		$data['update_student'] = 'Update Students record';
+    
+    if (count($stdid)) {
+      foreach ($stdid as $key => $value) {
+        $selected = "selected=selected ";
+        $data['session'] = "<option value = '{$value->sid}' $selected>{$value->session_name}</option>";
+        $data['program'] = "<option value = '{$value->pid}' $selected>{$value->program_name}</option>";
+      }
+    }
+
+		  $data['student_records'] = 'Students Management';
+		  $data['update_student'] = 'Update Students record';
         $data['page_title'] = 'Manage Students';
         $data['optional_description'] = 'Update current students record.';
         //$data['desc_students'] = 'Add current session';
@@ -393,59 +402,71 @@ class Students extends MY_Controller{
 
           if (($opfile = fopen($stddetail, "r")) !== FALSE){
             while (($data = fgetcsv($opfile, ",")) !== FALSE){
-               
-              $pname = $this->M_Programs->get_program_by_name($data[3]);
-              $sessionname = $this->M_Admin->get_session_by_name($data[2]);
-
-              $pid = ""; $sid = "";
-              foreach ($pname as $key => $value) {
-                $pid = $value->pid;
-              }
-
-              foreach ($sessionname as $key => $value) {
-                $sid = $value->sid;
-              }
               
-              $this->M_Student->add_students($data[0], $data[1], $sid, $pid);
-             
-              /*$subjects = $this->M_Subjects->get_subject_pid($pid);
-              $student = $this->M_Student->get_student_by_name($data[1]);
-              $stdid = "";
-              foreach ($student as $key => $value) {
-                $stdid = $value->stdid;
-              }
-
-              foreach ($subjects as $key => $value) {
-                $this->M_Grades->insert_into_gradestb($stdid, $pid, $value->sid);
-              }*/
-              $subjects = $this->M_Subjects->get_subject_pid($pid);
-              $student = $this->M_Student->get_student_by_name($data[1]);
-              $stdid = ""; $session_id = "";
-              foreach ($student as $key => $value) {
-                $stdid = $value->stdid;
-                $session_id = $value->session_id;
-              }
-
-              $session_name = $this->M_Admin->get_session_by_id($session_id);
-              foreach ($session_name as $key => $session) {
-                $sesname=$session->session_name;
+              $matri = $this->M_Student->get_student_by_matric($data[0]);
+              if(count($matri) > 0){
                 
-                for($counter = 1; $counter <= 2; $counter++){
-                  $semester = $this->M_Admin->get_semester_by_name("$sesname.$counter");
-                  foreach ($semester as $key => $sem) {
-                    $semid = $sem->semid; 
-                    foreach ($subjects as $key => $subject) {
-                      $this->M_Grades->insert_into_gradestb($stdid, $pid, $subject->sid, $semid);
-                    }
-                  } 
+                foreach ($matri as $key => $mat) {
+                  //$str .= $mat->matric_no . ', ';
+                  $matrics[] = $mat->matric_no. ', ';
+                }
+              }else{
+                $pname = $this->M_Programs->get_program_by_name($data[3]);
+                $sessionname = $this->M_Admin->get_session_by_name($data[2]);
+
+                $pid = ""; $sid = "";
+                foreach ($pname as $key => $value) {
+                  $pid = $value->pid;
+                }
+
+                foreach ($sessionname as $key => $value) {
+                  $sid = $value->sid;
+                }
+                
+                $this->M_Student->add_students($data[0], $data[1], $sid, $pid);
+               
+                /*$subjects = $this->M_Subjects->get_subject_pid($pid);
+                $student = $this->M_Student->get_student_by_name($data[1]);
+                $stdid = "";
+                foreach ($student as $key => $value) {
+                  $stdid = $value->stdid;
+                }
+
+                foreach ($subjects as $key => $value) {
+                  $this->M_Grades->insert_into_gradestb($stdid, $pid, $value->sid);
+                }*/
+                $subjects = $this->M_Subjects->get_subject_pid($pid);
+                $student = $this->M_Student->get_student_by_name($data[1]);
+                $stdid = ""; $session_id = "";
+                foreach ($student as $key => $value) {
+                  $stdid = $value->stdid;
+                  $session_id = $value->session_id;
+                }
+
+                $session_name = $this->M_Admin->get_session_by_id($session_id);
+                foreach ($session_name as $key => $session) {
+                  $sesname=$session->session_name;
+                  
+                  for($counter = 1; $counter <= 2; $counter++){
+                    $semester = $this->M_Admin->get_semester_by_name("$sesname.$counter");
+                    foreach ($semester as $key => $sem) {
+                      $semid = $sem->semid; 
+                      foreach ($subjects as $key => $subject) {
+                        $this->M_Grades->insert_into_gradestb($stdid, $pid, $subject->sid, $semid);
+                      }
+                    } 
+                  }
                 }
               }
             }
             fclose($opfile);
             $this->session->set_flashdata('message', 'Students details uploaded successfully');
+            $matric = implode(" ",$matrics);
+            $this->session->set_flashdata('matric', $matric);
+            $this->session->set_flashdata('fail', 'The following Matric number(s) already exists.');
             $this->add_students();
           }else{
-            $this->session->set_flashdata('message', 'Failed to upload, check your file format');
+            $this->session->set_flashdata('failed', 'Failed to upload, check your file format');
             $this->add_students();
           }
         }

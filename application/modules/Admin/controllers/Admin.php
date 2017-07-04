@@ -10,7 +10,7 @@ class Admin extends MY_Controller{
 
 	function index($data = NULL){
 
-		$data['student_records'] = 'Students Management';
+		/*$data['student_records'] = 'Students Management';
         $data['optional_description'] = 'Summary of registered students.';
         $data['page_title'] = 'Dashboard';
         $data['desc_students'] = 'Total Registered Students';
@@ -18,8 +18,15 @@ class Admin extends MY_Controller{
         $data['num_accouning_students'] = count($this->M_Student->get_acc_students());
         $data['num_agric_students'] = count($this->M_Student->get_agric_students());
         $data['num_anatomy_students'] = count($this->M_Student->get_anatomy_students());
-        $data['num_compsc_students'] = count($this->M_Student->get_compsc_students());
-        $data['content_view'] = 'Admin/dashboard_view';
+        $data['num_compsc_students'] = count($this->M_Student->get_compsc_students());*/
+        $data['student_records'] = 'Students Management';
+		$data['add_session'] = 'Add Session';
+        $data['view_session'] = 'View Session';
+        $data['page_title'] = 'Manage Session';
+        $data['optional_description'] = 'Create new session record.';
+        $data['desc_students'] = 'Add current session';
+        $data['session_table'] = $this->create_session_table();
+        $data['content_view'] = 'Admin/session_view';
         $this->templates->call_admin_template($data);
 	}
 

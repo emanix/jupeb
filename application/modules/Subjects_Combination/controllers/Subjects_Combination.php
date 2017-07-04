@@ -103,9 +103,16 @@ class Subjects_Combination extends MY_Controller{
     function add_subject_combo(){
     	
     	$progid = $this->session->userdata('p_id');
+
     	if ($this->input->post()){
-    		$this->M_Subjects->add_subject_combination($progid, $this->input->post('sub_name'));
-    		$this->session->set_userdata(array('sub_id' => $this->input->post('sub_name')));
+    		$subcomb = $this->M_Subjects->get_subject_pidsid($progid, $this->input->post('sub_name'));
+    		if(count($subcomb) > 0){
+    			$this->session->set_flashdata('failed', 'This subject already exists.');
+    		}else{
+	    		$this->M_Subjects->add_subject_combination($progid, $this->input->post('sub_name'));
+	    		$this->session->set_userdata(array('sub_id' => $this->input->post('sub_name')));
+	    		$this->session->set_flashdata('success', 'Subject successfully added.');
+	    	}
     	}
     	$this->add_subject_combination($progid);
     	//$this->M_Grades->initiate_percent_with_zero($this->session->userdata('p_id'), $this->session->userdata('sub_id'));

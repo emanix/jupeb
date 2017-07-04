@@ -16,6 +16,23 @@
             <div class="box-header">
               <h3 class="box-title"><?php echo $view_students; ?></h3>
             </div>
+            <?php if (isset($_SESSION['failed'])) {?>
+                    <div class="alert alert-warning">
+                        <strong>Warning!</strong> <?php  echo $_SESSION['failed'];?>
+                    </div>
+                <?php } ?>
+
+                <?php if (isset($_SESSION['success'])) {?>
+                    <div class="alert alert-success">
+                        <?php  echo $_SESSION['success'];?>
+                    </div>
+                <?php } ?>
+
+                <?php if (validation_errors() !="") {?>
+                    <div class="alert alert-danger">
+                        <?php echo validation_errors(); ?>
+                    </div>
+                <?php } ?>
             <!-- /.box-header -->
             <div class="box-body">
               <table id="example2" class="table table-bordered table-striped">

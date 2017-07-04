@@ -58,8 +58,8 @@
                   <label for="inputEmail3" class="col-sm-3 control-label">Session:</label>
                   <div class="col-sm-9">
                   <select class="form-control" name="sid" style="width: 80%;">
-                    <option>Select Session</option>
-                    <?php echo $sessions; ?>
+                    <option value="">Select Session</option>
+                    <?php echo $session; ?>
                   </select>
                   </div>
                 </div>                
@@ -68,8 +68,8 @@
                   <label for="inputEmail3" class="col-sm-3 control-label">Program: </label>
                   <div class="col-sm-9">
                   <select class="form-control" name="pid" style="width: 80%;">
-                    <option>Select Program</option>
-                    <?php echo $programs; ?>
+                    <option value="">Select Program</option>
+                    <?php echo $program; ?>
                   </select>
                   </div>
                 </div>                

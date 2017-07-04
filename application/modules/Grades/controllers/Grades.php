@@ -377,8 +377,8 @@ class Grades extends MY_Controller{
 			$exam = $this->input->post('exam');
 
 			$this->M_Grades->add_students_score($stdid, $pid, $subid, $attendance, $quiz, $assignment, $midsem, $exam, $total, $percent);
-			$this->session->set_flashdata('success', 'Students scores are successfully added');
+			$this->session->set_flashdata('success', 'Students scores are successfully updated');
 		}
-		redirect(base_url() . 'Grades/view_students_grades/'.$pid.'');
+		redirect(base_url() . 'Grades/add_students_grades/'.$this->session->userdata('student_id').'');
 	}
 }

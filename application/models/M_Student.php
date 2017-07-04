@@ -36,6 +36,16 @@ class M_Student extends CI_Model{
         return $query->result();
     }
 
+    function get_student_by_idpro($stdid){
+        $this->db->select('*');
+        $this->db->from('studenttb');
+        $this->db->join('programtb', 'programtb.pid = studenttb.program_id');
+        $this->db->join('sessiontb', 'sessiontb.sid = studenttb.session_id');
+        $this->db->where('stdid', $stdid);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     function get_student_by_matric($matric){
         $query = $this->db->query('select * from studenttb where matric_no = "'.$matric.'" ');
         return $query->result();
