@@ -2,7 +2,7 @@
 <section class="content-header">
    <ol class="breadcrumb">
      <li><a href="<?php echo base_url(); ?>Admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-     <li><a href="<?php echo base_url(); ?>Students/add_students"><i class="active"></i> Add students</a></li>
+     <li><a href="<?php echo base_url(); ?>Students/view_students"><i class="active"></i> View students</a></li>
      <li class="active">Edit student</li>
    </ol>
 </section>
@@ -37,7 +37,7 @@
             <form class="form-horizontal" method="POST" action="<?php echo base_url(); ?>Students/update_student">
               <div class="box-body">
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-3 control-label">Matric No.</label>
+                  <label for="inputEmail3" class="col-sm-3 control-label" id="mat">Matric No.</label>
 
                   <?php 
                     if ($matric_field !==""){
@@ -57,7 +57,7 @@
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-3 control-label">Session:</label>
                   <div class="col-sm-9">
-                  <select class="form-control" name="sid" style="width: 80%;">
+                  <select class="form-control" name="sid" id="sess" style="width: 80%;" onclick="populate_session()">
                     <option value="">Select Session</option>
                     <?php echo $session; ?>
                   </select>
@@ -67,7 +67,7 @@
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-3 control-label">Program: </label>
                   <div class="col-sm-9">
-                  <select class="form-control" name="pid" style="width: 80%;">
+                  <select class="form-control" name="pid" id="progs" style="width: 80%;" onclick="populate_program()">
                     <option value="">Select Program</option>
                     <?php echo $program; ?>
                   </select>
@@ -85,3 +85,18 @@
       </div>
       <!-- /.row -->
 </section> 
+<script type="text/javascript">
+    function populate_session(){
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", "<?php echo base_url(); ?>Students/get_sessions?session="+document.getElementById("mat").value, false);
+        xmlhttp.send(null);
+        document.getElementById("sess").innerHTML=xmlhttp.responseText;
+    }
+
+    function populate_program(){
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", "<?php echo base_url(); ?>Students/get_programs?programs="+document.getElementById("mat").value, false);
+        xmlhttp.send(null);
+        document.getElementById("progs").innerHTML=xmlhttp.responseText;
+    }
+</script>

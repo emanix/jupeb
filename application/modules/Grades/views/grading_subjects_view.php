@@ -2,19 +2,18 @@
 <section class="content-header">
    <ol class="breadcrumb">
      <li><a href="<?php echo base_url(); ?>Admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-     <li class="active">Add Subjects</li>
+     <li class="active">Select session</li>
    </ol>
 </section>
 </div>
 <section class="content">
       <div class="row">
-      	 <div class="col-md-6">
+      	<div class="col-md-6">
           <!-- Horizontal Form -->
           <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title"><?php echo $add_subject; ?></h3>
+              <h3 class="box-title">View session to be graded.</h3>
             </div>
-            <!-- /.box-header -->
             <?php if (isset($_SESSION['failed'])) {?>
                     <div class="alert alert-warning">
                         <strong>Warning!</strong> <?php  echo $_SESSION['failed'];?>
@@ -32,34 +31,34 @@
                         <?php echo validation_errors(); ?>
                     </div>
                 <?php } ?>
-            <!-- form start -->
-            <form class="form-horizontal" method="POST" action="<?php echo base_url(); ?>Subjects/add_subject">
+            <form class="form-horizontal" method="POST" action="<?php echo base_url(); ?>Grades/manage_grades_subject">
               <div class="box-body">
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-3 control-label">Subject Name</label>
-
+                  <label for="inputEmail3" class="col-sm-3 control-label">Session: </label>
                   <div class="col-sm-9">
-                    <input  type="text" class="form-control" id="inputEmail3" name="subject" placeholder="Add Subject">
+                  <select class="form-control" name="sesid" style="width: 100%;">
+                    <option value="">Select Session</option>
+                    <?php echo $sessions; ?>
+                  </select>
                   </div>
                 </div>
-                
+                <div class="box-footer">
+                <button type="submit" class="btn btn-info pull-right">View</button>
+                </div>
               </div>
-              <!-- /.box-body -->
-              <div class="box-footer">
-                <button type="submit" class="btn btn-info pull-right"><?php echo $add_subject; ?></button>
-              </div>
-              <!-- /.box-footer -->
             </form>
           </div>
         </div>
-      <!-- /.row -->
-</section> 
-<section class="content">
+      </div>
+</section>
+<?php 
+    if ($semester_table){ ?>
+      <section class="content">
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title"><?php echo $view_subject; ?></h3>
+              <h3 class="box-title"><?php echo $view_program; ?></h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -67,30 +66,30 @@
                 <thead>
                 <tr>
                   <th>Serial No</th>
-                  <th>Subject Name</th>
-                  <th></th>
+                  <th>Semester Name</th>
+                  <th>Show Subjects</th>
                 </tr>
                 </thead>
                 
                 <tfoot>
                 <tr>
                   <th>Serial No</th>
-                  <th>Subject Name</th>
-                  <th></th>
+                  <th>Semester Name</th>
+                  <th>Show Subjects</th>
                 </tr>
                 </tfoot>
                 <tbody>
                  <?php
-                 if ($subjects_table !== "" )
+                 if ($semester_table !== "" )
                  {
-                    echo $subjects_table;
+                    echo $semester_table;
                  }
                  else{
                    ?>
                      <tr>
-                          <td colspan="3"><center><h4>No Subjects to display</h4></center></td>
+                          <td colspan="3"><center><h4>No Semester to display</h4></center></td>
                      </tr>
-               	 <?php } ?>
+                 <?php } ?>
                 </tbody>
               </table>
             </div>
@@ -99,3 +98,4 @@
          </div>
       <!-- /.row -->
   </section>
+<?php  } ?>

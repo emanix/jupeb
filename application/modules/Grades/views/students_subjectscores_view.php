@@ -2,10 +2,9 @@
 <section class="content-header">
    <ol class="breadcrumb">
      <li><a href="<?php echo base_url(); ?>Admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-     <li><a href="<?php echo base_url(); ?>Grades/manage_grades"><i class="active"></i> Select session</a></li>
-     <li><a href="<?php echo base_url(); ?>Grades/semester_select/<?php echo $this->session->userdata('semest_id'); ?>"><i class="active"></i> Show programs</a></li>
-     <li><a href="<?php echo base_url(); ?>Grades/view_students_grades/<?php echo $this->session->userdata('proid'); ?>"><i class="active"></i> View students</a></li>
-     <li class="active">Subjects list</li>
+     <li><a href="<?php echo base_url(); ?>Grades/manage_subjectgrades"><i class="active"></i> Select session</a></li>
+     <li><a href="<?php echo base_url(); ?>Grades/show_subjects/<?php echo $this->session->userdata('semest_id'); ?>"><i class="active"></i> Show subjects</a></li>
+     <li class="active">Students list</li>
    </ol>
 </section>
 </div>
@@ -39,7 +38,8 @@
                 <thead>
                 <tr>
                   <th>Serial No</th>
-                  <th>Subject Name</th>
+                  <th>Student Name</th>
+                  <th>Matric No</th>
                   <th>Attendance</th>
                   <th>Quiz</th>
                   <th>Assignment</th>
@@ -54,7 +54,8 @@
                 <tfoot>
                 <tr>
                   <th>Serial No</th>
-                  <th>Subject Name</th>
+                  <th>Matric No</th>
+                  <th>Student Name</th>
                   <th>Attendance</th>
                   <th>Quiz</th>
                   <th>Assignment</th>

@@ -164,7 +164,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li><a href="<?php echo base_url(); ?>Students/view_students">View & Edit Students Details</a></li>
           </ul>
         </li>
-        <li><a href="<?php echo base_url(); ?>Grades/manage_grades"><i class="fa fa-laptop"></i> <span>Manage Studens' Grades</span></a></li>
+        <li class="treeview">
+          <a href="#"><i class="ion ion-laptop"></i> <span>Manage Studens' Grades</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url(); ?>Grades/manage_grades"><i class="fa fa-laptop"></i> <span>Manage Grades by Program</span></a></li>
+            <li><a href="<?php echo base_url(); ?>Grades/manage_subjectgrades"><i class="fa fa-laptop"></i> <span>Manage Grades by Subject</span></a></li>
+          </ul>
         <li><a href="<?php echo base_url(); ?>Reporting/reports"><i class="fa fa-table"></i> <span>Generate Reports</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->

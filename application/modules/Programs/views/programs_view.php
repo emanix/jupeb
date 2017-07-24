@@ -66,7 +66,7 @@
                 <tr>
                   <th>Serial No</th>
                   <th>Program Name</th>
-                  <!--<th>Edit</th>-->
+                  <th></th>
                 </tr>
                 </thead>
                 
@@ -74,7 +74,7 @@
                 <tr>
                   <th>Serial No</th>
                   <th>Program Name</th>
-                  <!--<th>Edit</th>-->
+                  <th></th>
                 </tr>
                 </tfoot>
                 <tbody>

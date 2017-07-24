@@ -157,7 +157,7 @@ class Students extends MY_Controller{
    				$student_table .= "<th>Serial No</th>";
    				$student_table .= "<th>Student Name</th>";
    				$student_table .= "<th>Program</th>";
-   				//$student_table .= "<th>Edit</th>";
+   				$student_table .= "<th></th>";
    				$student_table .= "</tr>";
    				$student_table .= "</thead>";
    				$student_table .= "<tfoot>";
@@ -165,7 +165,7 @@ class Students extends MY_Controller{
    				$student_table .= "<th>Serial No</th>";
    				$student_table .= "<th>Student Name</th>";
    				$student_table .= "<th>Program</th>";
-   				//$student_table .= "<th>Edit</th>";
+   				$student_table .= "<th></th>";
    				$student_table .= "</tr>";
    				$student_table .= "</tfoot>";
    				$student_table .= "<tbody>";
@@ -209,7 +209,7 @@ class Students extends MY_Controller{
    				$student_table .= "<th>Serial No</th>";
    				$student_table .= "<th>Student Name</th>";
    				$student_table .= "<th>Program</th>";
-   				//$student_table .= "<th>Edit</th>";
+   				$student_table .= "<th></th>";
    				$student_table .= "</tr>";
    				$student_table .= "</thead>";
    				$student_table .= "<tfoot>";
@@ -217,7 +217,7 @@ class Students extends MY_Controller{
    				$student_table .= "<th>Serial No</th>";
    				$student_table .= "<th>Student Name</th>";
    				$student_table .= "<th>Program</th>";
-   				//$student_table .= "<th>Edit</th>";
+   				$student_table .= "<th></th>";
    				$student_table .= "</tr>";
    				$student_table .= "</tfoot>";
    				$student_table .= "<tbody>";
@@ -471,6 +471,34 @@ class Students extends MY_Controller{
           }
         }
       }
+    }
+  }
+
+  function get_sessions(){
+    if (isset($_GET['session'])) {
+      $sessions = $this->M_Student->get_session_details();
+      echo "<select class='form-control' name='sid' style='width: 80%;'>";
+      echo "<option value=''>Please Select Session</option>";
+      if (count($sessions)){
+        foreach ($sessions as $key => $value){
+          echo "<option value = '{$value->sid}'>{$value->session_name}</option>";
+        }
+      }
+      echo "</select>";
+    }
+  }
+
+  function get_programs(){
+    if (isset($_GET['programs'])) {
+      $programs = $this->M_Student->get_program();
+      echo "<select class='form-control' name='pid' style='width: 80%;'>";
+      echo "<option value=''>Please Select Program</option>";
+      if (count($programs)){
+        foreach ($programs as $key => $value){
+          echo "<option value = '{$value->pid}'>{$value->program_name}</option>";
+        }
+      }
+      echo "</select>";
     }
   }
 }

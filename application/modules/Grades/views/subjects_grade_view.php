@@ -2,8 +2,8 @@
 <section class="content-header">
    <ol class="breadcrumb">
      <li><a href="<?php echo base_url(); ?>Admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-     <li><a href="<?php echo base_url(); ?>Grades/manage_grades"><i class="active"></i> Select session</a></li>
-     <li class="active">Programs list</li>
+     <li><a href="<?php echo base_url(); ?>Grades/manage_subjectgrades"><i class="active"></i> Select session</a></li>
+     <li class="active">Subjects list</li>
    </ol>
 </section>
 </div>
@@ -20,7 +20,7 @@
                 <thead>
                 <tr>
                   <!--<th>Serial No</th>-->
-                  <th>Program Name</th>
+                  <th>Subjects Name</th>
                   <th></th>
                 </tr>
                 </thead>
@@ -28,20 +28,20 @@
                 <tfoot>
                 <tr>
                   <!--<th>Serial No</th>-->
-                  <th>Program Name</th>
+                  <th>Subjects Name</th>
                   <th></th>
                 </tr>
                 </tfoot>
                 <tbody>
                  <?php
-                 if ($programs_table !== "" )
+                 if ($subjects_table !== "" )
                  {
-                    echo $programs_table;
+                    echo $subjects_table;
                  }
                  else{
                    ?>
                      <tr>
-                          <td colspan="3"><center><h4>No Programs to display</h4></center></td>
+                          <td colspan="3"><center><h4>No Subjects to display</h4></center></td>
                      </tr>
                	 <?php } ?>
                 </tbody>

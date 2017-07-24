@@ -23,6 +23,20 @@ class Grades extends MY_Controller{
         $this->templates->call_admin_template($data);
 	}
 
+	function manage_subjectgrades(){
+
+		$data['student_records'] = 'Students Management';
+		//$data['add_program'] = 'Add Program';
+        $data['view_program'] = 'List of available Subjects';
+        $data['page_title'] = 'Manage Students Grades';
+        $data['optional_description'] = 'Grade students of each subject';
+        //$data['desc_students'] = 'Add current session';
+        $data['sessions'] = $this->session_select();
+        $data['semester_table'] = "";
+        $data['content_view'] = 'Grades/grading_subjects_view';
+        $this->templates->call_admin_template($data);
+	}
+
 	function manage_grade(){
 		$this->load->library('form_validation');
 
@@ -48,6 +62,31 @@ class Grades extends MY_Controller{
     	}
 	}
 
+	function manage_grades_subject(){
+		$this->load->library('form_validation');
+
+        $this->form_validation->set_rules('sesid', 'Select Session', 'required');
+        // if validation fails
+        if ($this->form_validation->run() == FALSE){
+            $this->manage_grades();
+            
+        }
+        else
+        {
+
+			$data['student_records'] = 'Students Management';
+			//$data['add_program'] = 'Add Program';
+	        $data['view_program'] = 'Semester View';
+	        $data['page_title'] = 'Manage Students Grades';
+	        $data['optional_description'] = 'Grade students of each program';
+	        //$data['desc_students'] = 'Add current session';
+	        $data['sessions'] = $this->session_select();
+	        $data['semester_table'] = $this->session_selectedS();
+	        $data['content_view'] = 'Grades/grading_subjects_view';
+	        $this->templates->call_admin_template($data);
+    	}
+	}
+
 	function session_selected(){
 		if($this->input->post()){
 			$sessionname = $this->M_Admin->get_session_by_id($this->input->post('sesid'));
@@ -63,6 +102,28 @@ class Grades extends MY_Controller{
 	                $semester_table .= "<td>$counter</td>";
 	                $semester_table .= "<td>{$sem->semester_name}</td>";
 	                $semester_table .= "<td><a href='".base_url()."Grades/semester_select/{$sem->semid}'> <i class='material-icons'>Show Programs</i></a></td>";
+	              } 
+	            }
+            }
+		}
+		return $semester_table;
+	}
+
+	function session_selectedS(){
+		if($this->input->post()){
+			$sessionname = $this->M_Admin->get_session_by_id($this->input->post('sesid'));
+			$semester_table = "";
+
+			foreach ($sessionname as $key => $session) {
+	            $sesname=$session->session_name;
+	            
+	            for($counter = 1; $counter <= 2; $counter++){
+	              $semester = $this->M_Admin->get_semester_by_name("$sesname.$counter");
+	              foreach ($semester as $key => $sem) {
+	                $semester_table .= "<tr>"; 
+	                $semester_table .= "<td>$counter</td>";
+	                $semester_table .= "<td>{$sem->semester_name}</td>";
+	                $semester_table .= "<td><a href='".base_url()."Grades/show_subjects/{$sem->semid}'> <i class='material-icons'>Show Subjects</i></a></td>";
 	              } 
 	            }
             }
@@ -123,6 +184,45 @@ class Grades extends MY_Controller{
         return $options;
     }
 
+    function show_subjects($id){
+		$this->session->set_userdata('semest_id', $id);
+		$subjectid = $this->M_Grades->get_subjects_by_semid($id);
+		$programs = "";
+		$semname = $this->M_Grades->get_semname_by_id($id);
+		foreach ($semname as $key => $value) {
+			$semestername = $value->semester_name;
+			$seid = $value->semid;
+			$this->session->set_userdata('semest_name', $semestername);
+			$this->session->set_userdata('semestid', $seid);
+		}
+		$subject_table = "";
+		foreach ($subjectid as $key => $sid) {
+			$subjects = $this->M_Subjects->get_subject_by_id($sid->subid);
+			
+			if (count($subjects)>0){
+				//$incrementer = 1;
+				foreach ($subjects as $key => $value) {
+					$subject_table .="<tr>";
+					//$subject_table .="<td>$incrementer</td>";
+					$subject_table .="<td>{$value->subject_name}</td>";
+					$subject_table .="<td><a href='".base_url()."Grades/view_students_grade/{$value->subid}/{$id}'> <i class='material-icons'>View Students</i></a></td>";
+					//$incrementer++;
+				}
+				$subject_table .="</tr>";
+			}
+		}
+
+		$data['student_records'] = 'Students Management';
+		//$data['add_program'] = 'Add Program';
+        $data['view_program'] = 'List of Subjects ('.$semestername.')';
+        $data['page_title'] = 'Manage Students Grades';
+        $data['optional_description'] = 'Grade students for each subject';
+        //$data['desc_students'] = 'Add current session';
+        $data['subjects_table'] = $subject_table;
+        $data['content_view'] = 'Grades/subjects_grade_view';
+        $this->templates->call_admin_template($data);
+	}
+
 	/*function create_programs_table(){
 		
 		$programs = $this->M_Programs->get_programs();
@@ -154,6 +254,152 @@ class Grades extends MY_Controller{
 
 		$grade_table = "";
 		$subjects = $this->M_Subjects->get_subject_pid($id);
+		$subject_name = "";
+		$grade_table .= "<table id='example2' class='table table-bordered table-striped'>";
+    	$grade_table .= "<thead>";
+    	$grade_table .= "<tr>";
+    	$grade_table .= "<th>Serial No</th>";
+   		$grade_table .= "<th>Student Name</th>";
+    	
+		foreach ($subjects as $key => $value) {
+			$sub_name = $this->M_Subjects->get_subject_by_id($value->sid);
+			
+			foreach ($sub_name as $key => $value) {
+				$grade_table .= "<th>{$value->subject_name}</th>";
+			}
+		}
+		$grade_table .= "<th></th>";
+		$grade_table .= "</tr>";
+   		$grade_table .= "</thead>";
+   		$grade_table .= "<tfoot>";
+   		$grade_table .= "<tr>";
+   		$grade_table .= "<th>Serial No</th>";
+   		$grade_table .= "<th>Student Name</th>";
+
+   		foreach ($subjects as $key => $value) {
+			$sub_name = $this->M_Subjects->get_subject_by_id($value->sid);
+
+			foreach ($sub_name as $key => $value) {
+				$grade_table .= "<th>{$value->subject_name}</th>";
+			}
+		}
+		$grade_table .= "<th></th>";
+   		$grade_table .= "</tr>";
+   		$grade_table .= "</tfoot>";
+   		$grade_table .= "<tbody>";
+   		
+   		$counter = 1;
+ 		$ses_name = substr($this->session->userdata('semest_name'), 0, 9);
+ 		$sesid = $this->M_Grades->get_sesid_by_name($ses_name);
+ 		foreach ($sesid as $key => $ses) {
+ 			$ses_id = $ses->sid;
+ 		}
+   		$student = $this->M_Student->get_student_by_programs($id, $ses_id);
+   		//Check if there are registered students for the program.
+   		if(count($student) > 0){
+   			//print_r(count($student)); print_r($student); die;
+	   		foreach ($student as $key => $value) {
+	    		$grade_table .="<tr>";
+				$grade_table .="<td>{$counter}</td>";
+				$grade_table .="<td>{$value->student_name}</td>";
+				$grade = $this->M_Grades->get_grades_by_stdid($value->stdid);
+				//Checks if students have been graded.
+				if(($grade)){
+					foreach ($grade as $key => $value) {
+						if ($value->percentage > 0){
+							$grade_table .="<td>{$value->percentage}</td>";
+						}else{
+							$grade_table .="<td>NG</td>";
+						}
+					}
+					
+				}
+				$grade_table .="<td><a href='".base_url()."Grades/add_students_grades/{$value->stdid}'> <i class='material-icons'>View</i></a></td>";
+				$counter++;
+			}
+		}else{
+			$grade_table .="<td colspan='3'><center><h4>There are no registered students for this course.</h4></center></td>";
+		}
+		$grade_table .= "</tr>";
+   		$grade_table .= "</tbody>";
+   		$grade_table .= "</table>";
+
+		$data['student_records'] = 'Students Management';
+		//$data['add_program'] = 'Add Program';
+        $data['view_students'] = 'List of '.$program_name.' Students ('.$this->session->userdata('semest_name').')';
+        $data['page_title'] = 'Manage Students Grades';
+        $data['optional_description'] = 'Grade each students in '.$program_name.'';
+        //$data['desc_students'] = 'Add current session';
+        $data['grading_table'] = $grade_table;
+        $data['content_view'] = 'Grades/grade_students_view';
+        $this->templates->call_admin_template($data);
+	}
+
+	function view_students_grade($sub_id, $sem_id){
+		//Get program name.
+		$subject = $this->M_Subjects->get_subject_by_id($sub_id);
+		$this->session->set_userdata('proid', $sub_id);
+		$program_name = "";
+
+		foreach ($subject as $key => $value) {
+			$subject_name = $value->subject_name;
+		}
+
+		$students = $this->M_Grades->get_students_by_subid($sub_id, $sem_id);
+
+		$grade_table = "";
+		$counter = 1;
+		foreach ($students as $key => $value) {
+			$grade_table .="<tr>";
+			$grade_table .="<td>{$counter}</td>";
+			$grade_table .="<td>{$value->student_name}</td>";
+			$grade_table .="<td>{$value->matric_no}</td>";
+			//$this->session->set_userdata('semest_id', $value->sem_id);
+			$this->session->set_userdata('student_id', $value->stdid);
+			$get_scores = $this->M_Grades->get_scores_by_subid($value->subid);
+			foreach ($get_scores as $key => $value) {
+				if($value->attendance == 0){
+					$grade_table .= "<td>NG</td>";
+				}else{
+					$grade_table .= "<td>{$value->attendance}</td>";
+				}
+				if($value->quiz == 0){
+					$grade_table .= "<td>NG</td>";
+				}else{
+					$grade_table .= "<td>{$value->quiz}</td>";
+				}
+				if($value->assignment == 0){
+					$grade_table .= "<td>NG</td>";
+				}else{
+					$grade_table .= "<td>{$value->assignment}</td>";
+				}
+				if($value->mid_semester == 0){
+					$grade_table .= "<td>NG</td>";
+				}else{
+					$grade_table .= "<td>{$value->mid_semester}</td>";
+				}
+				if($value->exam == 0){
+					$grade_table .= "<td>NG</td>";
+				}else{
+					$grade_table .= "<td>{$value->exam}</td>";
+				}
+				if($value->total == 0){
+					$grade_table .= "<td>NG</td>";
+				}else{
+					$grade_table .= "<td>{$value->total}</td>";
+				}
+				if($value->percentage == 0){
+					$grade_table .= "<td>NG</td>";
+				}else{
+					$grade_table .= "<td>{$value->percentage}</td>";
+				}
+			}
+			$grade_table .="<td><a href='".base_url()."Grades/input_students_scores/{$value->subid}'> <i class='material-icons'>Edit Grade</i></a></td>";
+					
+			$grade_table .="</tr>";
+			$counter++;
+		}
+		/*$subjects = $this->M_Subjects->get_subject_pid($id);
 		$subject_name = "";
 		$grade_table .= "<table id='example2' class='table table-bordered table-striped'>";
     	$grade_table .= "<thead>";
@@ -222,16 +468,17 @@ class Grades extends MY_Controller{
 		}
 		$grade_table .= "</tr>";
    		$grade_table .= "</tbody>";
-   		$grade_table .= "</table>";
+   		$grade_table .= "</table>";*/
 
 		$data['student_records'] = 'Students Management';
 		//$data['add_program'] = 'Add Program';
-        $data['view_students'] = 'List of '.$program_name.' Students ('.$this->session->userdata('semest_name').')';
+        $data['view_students'] = 'List of Students for '.$subject_name.' ('.$this->session->userdata('semest_name').')';
         $data['page_title'] = 'Manage Students Grades';
-        $data['optional_description'] = 'Grade each students in '.$program_name.'';
+        $data['optional_description'] = 'Grade each students for '.$subject_name.'';
         //$data['desc_students'] = 'Add current session';
-        $data['grading_table'] = $grade_table;
-        $data['content_view'] = 'Grades/grade_students_view';
+        $data['scores_table'] = $grade_table;
+        $data['scores_field'] = "";
+        $data['content_view'] = 'Grades/students_subjectscores_view';
         $this->templates->call_admin_template($data);
 	}
 
