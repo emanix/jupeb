@@ -57,20 +57,24 @@
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-3 control-label">Session:</label>
                   <div class="col-sm-9">
-                  <select class="form-control" name="sid" id="sess" style="width: 80%;" onclick="populate_session()">
+                  <?php echo $session; ?>
+                  <?php echo $sessionss; ?>
+                  <!--<select class="form-control" name="sid" id="sess" style="width: 80%;" onclick="populate_session()">
                     <option value="">Select Session</option>
                     <?php echo $session; ?>
-                  </select>
+                  </select>-->
                   </div>
                 </div>                
                 
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-3 control-label">Program: </label>
                   <div class="col-sm-9">
-                  <select class="form-control" name="pid" id="progs" style="width: 80%;" onclick="populate_program()">
+                  <?php echo $program; ?>
+                  <?php echo $programss; ?>
+                  <!--<select class="form-control" name="pid" id="progs" style="width: 80%;" onclick="populate_program()">
                     <option value="">Select Program</option>
                     <?php echo $program; ?>
-                  </select>
+                  </select>-->
                   </div>
                 </div>                
               

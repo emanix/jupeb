@@ -14,6 +14,23 @@
             <div class="box-header with-border">
               <h3 class="box-title">Search students by Matric number.</h3>
             </div>
+            <?php if (isset($_SESSION['failed'])) {?>
+                    <div class="alert alert-warning">
+                        <strong>Warning!</strong> <?php  echo $_SESSION['failed'];?>
+                    </div>
+                <?php } ?>
+
+                <?php if (isset($_SESSION['success'])) {?>
+                    <div class="alert alert-success">
+                        <?php  echo $_SESSION['success'];?>
+                    </div>
+                <?php } ?>
+
+                <?php if (validation_errors() !="") {?>
+                    <div class="alert alert-danger">
+                        <?php echo validation_errors(); ?>
+                    </div>
+                <?php } ?>
             <form class="form-horizontal" method="POST" action="<?php echo base_url(); ?>Students/search_students_with_matric">
               <div class="box-body">
                 <div class="form-group">

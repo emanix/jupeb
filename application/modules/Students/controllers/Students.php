@@ -362,14 +362,23 @@ class Students extends MY_Controller{
 			}	
 		}
 
-    
     if (count($stdid)) {
+      foreach ($stdid as $key => $value) {
+        $data['session'] = "<input  type='text' class='form-control' id='inputEmail3' name='sidss' value = '{$value->session_name}' readonly>";
+        $data['sessionss'] = "<input  type='hidden' class='form-control' id='inputEmail3' name='sid' value = '{$value->sid}' readonly>";
+        $data['program'] = "<input  type='text' class='form-control' id='inputEmail3' name='pidss' value = '{$value->program_name}' readonly>";
+        $data['programss'] = "<input  type='hidden' class='form-control' id='inputEmail3' name='pid' value = '{$value->pid}' readonly>";
+      }
+    }
+
+    
+    /*if (count($stdid)) {
       foreach ($stdid as $key => $value) {
         $selected = "selected=selected ";
         $data['session'] = "<option value = '{$value->sid}' $selected>{$value->session_name}</option>";
         $data['program'] = "<option value = '{$value->pid}' $selected>{$value->program_name}</option>";
       }
-    }
+    }*/
 
 		  $data['student_records'] = 'Students Management';
 		  $data['update_student'] = 'Update Students record';
@@ -389,7 +398,7 @@ class Students extends MY_Controller{
 			$this->M_Student->update_student_record();
 			
         	$this->session->set_flashdata('success', 'Students record successfully updated');
-        	redirect(base_url() . 'Students/add_students');
+        	redirect(base_url() . 'Students/view_students');
 		}
 	}
 
